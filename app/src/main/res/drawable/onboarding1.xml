@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Onboarding 1 illustration">
+    <defs>
+        <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#25C2A0"/>
+            <stop offset="1" stop-color="#00BFA6"/>
+        </linearGradient>
+    </defs>
+
+    <!-- Background circle -->
+    <circle cx="512" cy="360" r="300" fill="#F6FBFA"/>
+
+    <!-- Person 1 (left) -->
+    <g transform="translate(220,360)">
+        <ellipse cx="0" cy="120" rx="70" ry="90" fill="#E9F7F4"/>
+        <circle cx="0" cy="40" r="40" fill="#FFF"/>
+        <path d="M-18 34 q18 -30 36 0" fill="#222" opacity="0.95"/>
+        <rect x="-55" y="150" width="110" height="24" rx="12" fill="#2C2C2C" opacity="0.9"/>
+    </g>
+
+    <!-- Person 2 (center back) -->
+    <g transform="translate(512,240)">
+        <ellipse cx="0" cy="150" rx="90" ry="110" fill="#E9F7F4"/>
+        <circle cx="0" cy="-10" r="60" fill="#FFF"/>
+        <path d="M-24 -2 q24 -38 48 0" fill="#222" opacity="0.95"/>
+        <rect x="-90" y="170" width="180" height="28" rx="14" fill="#2C2C2C" opacity="0.95"/>
+    </g>
+
+    <!-- Person 3 (right) -->
+    <g transform="translate(820,380)">
+        <ellipse cx="0" cy="120" rx="70" ry="90" fill="#E9F7F4"/>
+        <circle cx="0" cy="40" r="40" fill="#FFF"/>
+        <path d="M-15 36 q20 -28 40 0" fill="#222" opacity="0.95"/>
+        <rect x="-55" y="150" width="110" height="24" rx="12" fill="#2C2C2C" opacity="0.9"/>
+    </g>
+
+    <!-- Person 4 (front) -->
+    <g transform="translate(512,460)">
+        <rect x="-160" y="60" width="320" height="24" rx="12" fill="#25C2A0"/>
+        <circle cx="0" cy="-40" r="56" fill="#FFF"/>
+        <path d="M-28 -44 q28 -36 56 0" fill="#222" opacity="0.9"/>
+        <rect x="-120" y="40" width="240" height="36" rx="18" fill="url(#g1)" opacity="0.95"/>
+    </g>
+
+    <!-- Small decorative crosses/dots -->
+    <g fill="#00BFA6" opacity="0.9">
+        <rect x="160" y="120" width="8" height="24" rx="4"/>
+        <rect x="840" y="80" width="8" height="24" rx="4" transform="rotate(30 844 92)"/>
+        <circle cx="720" cy="520" r="6"/>
+        <circle cx="300" cy="520" r="6"/>
+    </g>
+
+    <!-- Shadow under group -->
+    <ellipse cx="512" cy="700" rx="280" ry="40" fill="#000" opacity="0.06"/>
+
+</svg>
