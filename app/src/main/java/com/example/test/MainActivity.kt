@@ -12,7 +12,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 OnboardingScreen {
-                    // Aquí puedes navegar a otra pantalla o terminar el onboarding
+                    //onboarding
                 }
             }
         }
