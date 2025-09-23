@@ -2,6 +2,7 @@ package com.example.test.ui.onboarding
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -10,7 +11,11 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.decode.SvgDecoder
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import com.example.test.R
+import com.example.test.ui.theme.TestTheme
 
 
 @Composable
@@ -30,12 +35,23 @@ fun OnboardingScreen(onFinish: () -> Unit) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Text("Bienvenido a la app de prueba")
-
-        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = "Bienvenido",
+            fontWeight = FontWeight.Bold,
+            fontSize = 12.sp
+        )
 
         Button(onClick = onFinish) {
-            Text("Continuar")
+            Text("Continuar al siguiente slide")
         }
+    }
+}
+
+//Puedes correr solo este file para entrar a lo que estes diseñando sin compilar toda la app
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PreviewOnboardingScreen() {
+    TestTheme {
+        OnboardingScreen(onFinish = {})
     }
 }
