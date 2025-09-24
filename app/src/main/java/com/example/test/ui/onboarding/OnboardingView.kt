@@ -31,10 +31,5 @@ fun OnboardingPageView(page: OnboardingPage) {
             contentDescription = page.title,
             modifier = Modifier.size(220.dp)
         )
-
-        Spacer(modifier = Modifier.height(24.dp))
-        Text(text = page.title, style = MaterialTheme.typography.headlineMedium)
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = page.description, style = MaterialTheme.typography.bodyMedium)
     }
 }

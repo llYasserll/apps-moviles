@@ -1,6 +1,7 @@
 package com.example.test.ui.onboarding
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Colors
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -16,6 +17,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.test.R
 import com.example.test.ui.theme.TestTheme
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
+import androidx.compose.ui.graphics.Color
+import com.example.test.ui.theme.BackgroundColorsMap
+import com.example.test.ui.theme.BrandColors
 
 
 @Composable
@@ -33,7 +40,7 @@ fun OnboardingScreen(onFinish: () -> Unit) {
             modifier = Modifier.fillMaxWidth().height(300.dp)
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        //Spacer(modifier = Modifier.height(24.dp))
 
         Text(
             text = "Bienvenido",
@@ -41,7 +48,11 @@ fun OnboardingScreen(onFinish: () -> Unit) {
             fontSize = 12.sp
         )
 
-        Button(onClick = onFinish) {
+        Button(
+            onClick = onFinish,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = BackgroundColorsMap[BrandColors.Secondary1]!!
+            )) {
             Text("Continuar al siguiente slide")
         }
     }
