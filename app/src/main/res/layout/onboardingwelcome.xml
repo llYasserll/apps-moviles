@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
@@ -16,23 +17,10 @@
 
     <!-- Botón Siguiente -->
 
-    <ImageView
-        android:id="@+id/imgSlide"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="108dp"
-        android:scaleType="fitCenter"
-        android:src=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
         android:gravity="center"
         android:text="Bienvenido a PillTrack"
         android:textColor="@android:color/black"
@@ -41,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgSlide" />
+        tools:layout_editor_absoluteY="396dp" />
 
     <TextView
         android:id="@+id/tvSubtitle"
