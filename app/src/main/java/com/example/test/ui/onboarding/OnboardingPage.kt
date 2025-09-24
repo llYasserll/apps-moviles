@@ -13,3 +13,4 @@ val onboarding1 = OnboardingPage(
     description = "Tu compañero confiable para que nunca olvides tus medicamentos.",
     imageRes = R.raw.onboarding1
 )
+
