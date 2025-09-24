@@ -10,7 +10,7 @@ data class OnboardingPage(
 
 val onboarding1 = OnboardingPage(
     title = "Bienvenido a PillTrack",
-    description = "Tu compañero confiable para que nunca olvides tus medicamentos.",
+    description = "Tu compañero confiable para que nunca olvides tus medicamentos.aaaaaaaaa",
     imageRes = R.raw.onboarding1
 )
 

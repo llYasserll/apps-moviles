@@ -42,7 +42,7 @@ fun OnboardingScreen(onFinish: () -> Unit) {
         )
 
         Button(onClick = onFinish) {
-            Text("Continuar al siguiente slideaaaa")
+            Text("Continuar al siguiente slideaaaaaaa")
         }
     }
 }
