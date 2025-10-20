@@ -27,9 +27,9 @@
         android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="396dp" />
+        tools:layout_editor_absoluteY="431dp" />
 
     <TextView
         android:id="@+id/tvSubtitle"
