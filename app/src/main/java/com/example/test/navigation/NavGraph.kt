@@ -9,6 +9,7 @@ import com.example.test.ui.screens.LoginScreen
 import com.example.test.ui.screens.RegisterScreen
 import com.example.test.ui.screens.ForgotPasswordScreen
 import com.example.test.ui.onboarding.screens.OnboardingScreen
+import com.example.test.ui.screens.HomeScreen
 
 @Composable
 fun NavGraph(navController: NavHostController) {
@@ -23,6 +24,9 @@ fun NavGraph(navController: NavHostController) {
         }
         composable("register") {
             RegisterScreen(navController)
+        }
+        composable("home") {
+            HomeScreen(navController)
         }
 
         composable("onboarding") {

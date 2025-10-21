@@ -37,6 +37,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.test.R
+import com.example.test.ui.components.PrimaryButton
 
 
 @Composable
@@ -131,8 +132,6 @@ fun LoginScreen(navController: NavHostController) {
 
             TextButton(
                 onClick = { navController.navigate("forgot_password")
-                    // Aquí podrías navegar a una pantalla de recuperación si luego la creas
-                    // navController.navigate("recoverPassword")
                 },
                 modifier = Modifier.align(Alignment.End)
             ) {
@@ -144,15 +143,15 @@ fun LoginScreen(navController: NavHostController) {
             }
 
             // 🔹 Botón de ingresar
-            Button(
-                onClick = { navController.navigate("onboarding") },
+            PrimaryButton(
+                onClick = { navController.navigate("home") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A4D2E))
-            ) {
-                Text("Ingresar", color = Color.White)
-            }
+                text = "Ingresar"
+            )
+
+
             Spacer(modifier = Modifier.height(16.dp))
 
             Row(

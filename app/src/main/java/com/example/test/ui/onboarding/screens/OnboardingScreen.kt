@@ -21,6 +21,7 @@ import com.example.test.ui.components.PrimaryButton
 import com.example.test.ui.onboarding.components.OnboardingPageView
 import com.example.test.ui.onboarding.model.onboarding1
 import com.example.test.ui.onboarding.model.onboarding2
+import com.example.test.ui.theme.RedPink
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
