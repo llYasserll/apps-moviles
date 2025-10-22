@@ -43,6 +43,13 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+    implementation("androidx.navigation:navigation-compose:2.8.3")
+    implementation(libs.androidx.material3)
+    // Material Icons Extended (para usar Icons.Filled.*)
+    implementation("androidx.compose.material:material-icons-extended")
+
+
+
 
     // BOM centraliza versiones de Compose
     implementation(platform(libs.androidx.compose.bom))
