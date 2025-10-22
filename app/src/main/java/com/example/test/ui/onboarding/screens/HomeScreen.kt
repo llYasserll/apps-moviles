@@ -60,7 +60,7 @@ fun HomeScreen(navController: NavHostController) {
             ) {
                 item {
                     Text(
-                        text = "Hola, Eddy 👋",
+                        text = "Hola, Eddy",
                         style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
                         color = Color(0xFF1A4D2E)
                     )
@@ -130,7 +130,7 @@ fun CafeCard(cafe: CafeItem) {
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Button(
-                    onClick = { /* TODO: acción comprar o ver detalle */ },
+                    onClick = { /*  acción comprar o ver detalle */ },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A4D2E)),
                     modifier = Modifier.height(36.dp)
                 ) {

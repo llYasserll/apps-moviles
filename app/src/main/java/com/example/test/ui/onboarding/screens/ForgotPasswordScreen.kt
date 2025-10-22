@@ -24,7 +24,7 @@ fun ForgotPasswordScreen(navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF5F9F7)), // mismo fondo verde claro
+            .background(Color(0xFFF5F9F7)),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -34,7 +34,7 @@ fun ForgotPasswordScreen(navController: NavHostController) {
                 .fillMaxSize()
                 .padding(32.dp)
         ) {
-            // 🔹 Logo
+
             Image(
                 painter = painterResource(id = R.drawable.ic_launcher),
                 contentDescription = "Logo de la app",
@@ -43,7 +43,7 @@ fun ForgotPasswordScreen(navController: NavHostController) {
                     .padding(bottom = 16.dp)
             )
 
-            // 🔹 Título
+
             Text(
                 text = "¿Olvidaste tu contraseña?",
                 style = MaterialTheme.typography.headlineSmall.copy(
@@ -54,7 +54,7 @@ fun ForgotPasswordScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // 🔹 Subtítulo
+
             Text(
                 text = "Ingresa tu correo y te enviaremos instrucciones para recuperarla.",
                 color = Color.Gray,
@@ -64,7 +64,7 @@ fun ForgotPasswordScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // 🔹 Campo de correo
+
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
@@ -81,11 +81,11 @@ fun ForgotPasswordScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // 🔹 Botón de enviar
+
             Button(
                 onClick = {
-                    // Aquí podrías agregar lógica para enviar correo
-                    navController.popBackStack() // vuelve al login por ahora
+
+                    navController.popBackStack()
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -97,7 +97,7 @@ fun ForgotPasswordScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // 🔹 Volver al login
+
             TextButton(onClick = { navController.popBackStack() }) {
                 Text("Volver al inicio de sesión", color = Color(0xFF1A4D2E))
             }

@@ -1,55 +1,40 @@
 package com.example.test.ui.screens
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.material3.TextButton
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.Icon
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.Image
+import androidx.compose.material3.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.runtime.*
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import com.example.test.R
+import com.example.test.ui.components.PrimaryButton
+import com.example.test.ui.components.LoginViewModel
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import com.example.test.R
-import com.example.test.ui.components.PrimaryButton
-
 
 @Composable
-fun LoginScreen(navController: NavHostController) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = viewModel()) {
 
-    // 🎨 Fondo general
+    val email by viewModel.email
+    val password by viewModel.password
+    val isLoading by viewModel.isLoading
+    val errorMessage by viewModel.errorMessage
+    val successMessage by viewModel.successMessage
+
+    var passwordVisible by remember { mutableStateOf(false) }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF5F9F7)), // verde muy claro
+            .background(Color(0xFFF5F9F7)),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -59,34 +44,29 @@ fun LoginScreen(navController: NavHostController) {
                 .fillMaxSize()
                 .padding(32.dp)
         ) {
-            // 🔹 LOGO ARRIBA
+
             Image(
-                painter = painterResource(id = R.drawable.ic_launcher), //
+                painter = painterResource(id = R.drawable.ic_launcher),
                 contentDescription = "Logo de la app",
                 modifier = Modifier
                     .size(120.dp)
                     .padding(bottom = 24.dp)
             )
 
-            // 🔹 Texto de bienvenida
             Text(
                 text = "Bienvenido",
                 style = MaterialTheme.typography.headlineSmall,
-                color = Color(0xFF1A4D2E) // verde oscuro
+                color = Color(0xFF1A4D2E)
             )
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // 🔹 Campo de correo
             OutlinedTextField(
                 value = email,
-                onValueChange = { email = it },
+                onValueChange = { viewModel.email.value = it },
                 label = { Text("Correo electrónico") },
                 leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Filled.Person,
-                        contentDescription = "Icono de usuario"
-                    )
+                    Icon(Icons.Filled.Person, contentDescription = null)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
@@ -94,85 +74,57 @@ fun LoginScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            var passwordVisible by remember { mutableStateOf(false) }
-
-            // 🔹 Campo de contraseña
             OutlinedTextField(
                 value = password,
-                onValueChange = { password = it },
+                onValueChange = { viewModel.password.value = it },
                 label = { Text("Contraseña") },
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Filled.Lock,
-                        contentDescription = "Icono de candado"
-                    )
-                },
+                leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = null) },
                 trailingIcon = {
-                    val image = if (passwordVisible)
-                        androidx.compose.material.icons.Icons.Filled.Visibility
-                    else
-                        androidx.compose.material.icons.Icons.Filled.VisibilityOff
-
-                    androidx.compose.material3.IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        androidx.compose.material3.Icon(
-                            imageVector = image,
-                            contentDescription = if (passwordVisible) "Ocultar contraseña" else "Mostrar contraseña"
+                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        Icon(
+                            imageVector = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                            contentDescription = if (passwordVisible) "Ocultar" else "Mostrar"
                         )
                     }
                 },
-                visualTransformation = if (passwordVisible)
-                    androidx.compose.ui.text.input.VisualTransformation.None
-                else
-                    PasswordVisualTransformation(),
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
+
             Spacer(modifier = Modifier.height(16.dp))
 
-
-            TextButton(
-                onClick = { navController.navigate("forgot_password")
-                },
-                modifier = Modifier.align(Alignment.End)
-            ) {
-                Text(
-                    text = "¿Olvidaste tu contraseña?",
-                    color = Color(0xFF1A4D2E), // verde oscuro, para mantener el estilo
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-
-            // 🔹 Botón de ingresar
             PrimaryButton(
-                onClick = { navController.navigate("home") },
+                onClick = {
+                    if (email.isNotBlank() && password.isNotBlank()) {
+                        //viewModel.loginUser {
+                            //navController.navigate("home") // navega a home si éxito
+                        //}
+                        print("HOME")
+                    } else {
+                        viewModel.errorMessage.value = "Completa todos los campos"
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                text = "Ingresar"
+                text = if (isLoading) "Cargando..." else "Ingresar"
             )
 
+            Spacer(modifier = Modifier.height(12.dp))
 
-            Spacer(modifier = Modifier.height(16.dp))
+            errorMessage?.let {
+                Text(it, color = Color.Red, style = MaterialTheme.typography.bodySmall)
+            }
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = "¿No tienes cuenta? ",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Gray
-                )
-                TextButton(
-                    onClick = { navController.navigate("register")
-                    }
-                ) {
-                    Text(
-                        text = "Regístrate",
-                        color = Color(0xFF1A4D2E), // verde oscuro o tu color temático
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
+            successMessage?.let {
+                Text(it, color = Color(0xFF1A4D2E), style = MaterialTheme.typography.bodySmall)
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            TextButton(onClick = { navController.navigate("register") }) {
+                Text("¿No tienes cuenta? Regístrate", color = Color(0xFF1A4D2E))
             }
         }
     }
