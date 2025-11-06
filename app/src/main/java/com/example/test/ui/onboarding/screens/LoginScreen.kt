@@ -122,6 +122,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = vi
             }
 
             Spacer(modifier = Modifier.height(20.dp))
+            aaaaa
 
             TextButton(onClick = { navController.navigate("register") }) {
                 Text("¿No tienes cuenta? Regístrate aaa nuevo cambio", color = Color(0xFF1A4D2E))
