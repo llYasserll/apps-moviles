@@ -1,21 +1,24 @@
 package com.example.test.ui.onboarding.components
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import com.example.test.ui.onboarding.model.OnboardingPage
+import com.example.test.ui.theme.White
+import com.example.test.ui.theme.RedPink
 
 @Composable
-fun OnboardingPageView(page: OnboardingPage, modifier: Modifier) {
+fun OnboardingView(page: OnboardingPage, modifier: Modifier = Modifier) {
 
     val context = LocalContext.current
 
@@ -26,13 +29,12 @@ fun OnboardingPageView(page: OnboardingPage, modifier: Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        // Imagen SVG del onboarding
         AsyncImage(
             model = ImageRequest.Builder(context)
                 .data(
                     "android.resource://${context.packageName}/raw/${
-                        context.resources.getResourceEntryName(
-                            page.imageRes
-                        )
+                        context.resources.getResourceEntryName(page.imageRes)
                     }"
                 )
                 .decoderFactory(SvgDecoder.Factory())
@@ -43,17 +45,24 @@ fun OnboardingPageView(page: OnboardingPage, modifier: Modifier) {
 
         Spacer(Modifier.height(24.dp))
 
+        // Título del paso
         Text(
             text = page.title,
+            color = RedPink,
             fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
+            fontSize = 22.sp,
+            style = MaterialTheme.typography.headlineSmall
         )
 
         Spacer(Modifier.height(8.dp))
 
+        // Descripción del paso
         Text(
             text = page.description,
-            fontSize = 14.sp
+            color = White,
+            fontSize = 14.sp,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
     }
 }
