@@ -1,6 +1,7 @@
 package com.example.test.data
 
 import com.example.test.data.model.RegisterResponse
+import com.example.test.data.model.UserAuth
 import com.example.test.data.remote.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
@@ -13,13 +14,9 @@ class UserRepository {
         password: String,
         onResult: (RegisterResponse?) -> Unit
     ) {
-        val body = mapOf(
-            "fullName" to fullName,
-            "email" to email,
-            "password" to password
-        )
+        val userAuth = UserAuth(fullName = fullName, email = email, password = password)
 
-        RetrofitInstance.api.registerUser(body).enqueue(object : Callback<RegisterResponse> {
+        RetrofitInstance.api.registerUser(userAuth).enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(
                 call: Call<RegisterResponse>,
                 response: Response<RegisterResponse>

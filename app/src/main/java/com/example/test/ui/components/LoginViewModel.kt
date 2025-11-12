@@ -1,10 +1,10 @@
 package com.example.test.ui.components
 
-
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.test.data.model.*
+import com.example.test.data.model.LoginResponse
+import com.example.test.data.model.UserAuth
 import com.example.test.data.remote.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,7 +23,11 @@ class LoginViewModel : ViewModel() {
         errorMessage.value = null
         successMessage.value = null
 
-        val userAuth = UserAuth(email.value, password.value)
+        val userAuth = UserAuth(
+            fullName = "",
+            email = email.value,
+            password = password.value
+        )
 
         RetrofitInstance.api.login(userAuth).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(
@@ -31,9 +35,10 @@ class LoginViewModel : ViewModel() {
                 response: Response<LoginResponse>
             ) {
                 isLoading.value = false
-                if (response.isSuccessful) {
+                if (response.isSuccessful && response.body() != null) {
+                    val loginResponse = response.body()
                     successMessage.value = "Inicio de sesión exitoso"
-                    Log.d("LOGIN_SUCCESS", "Token: ${response.body()?.accessToken}")
+                    Log.d("LOGIN_SUCCESS", "Token: ${loginResponse?.accessToken}")
                 } else {
                     errorMessage.value = "Credenciales incorrectas o error del servidor"
                     Log.e("LOGIN_ERROR", "Código: ${response.code()}")
