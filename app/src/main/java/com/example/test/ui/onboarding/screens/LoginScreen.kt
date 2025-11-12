@@ -35,7 +35,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = vi
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Black), // Fondo negro
+            .background(Black),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -116,7 +116,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = vi
                 onClick = {
                     if (true) {
                         //viewModel.loginUser() {
-                            navController.navigate("home") // navega a home si éxito
+                            navController.navigate("home")
                         //}
                         print("HOME")
                     } else {

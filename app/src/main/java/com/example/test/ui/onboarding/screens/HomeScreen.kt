@@ -38,10 +38,10 @@ fun HomeScreen(navController: NavHostController) {
     var searchQuery by remember { mutableStateOf("") }
 
     val cafes = listOf(
-        CafeItem("Café en Grano Tunki Tipo Americano 215g", "S/ 8.00", R.drawable.im_cafeamericano),
-        CafeItem("Café Gourmet Zokya 250gr", "S/ 9.00", R.drawable.im_cafegourmet),
-        CafeItem("Three Monkeys Bourbon 200gr", "S/ 10.00", R.drawable.im_threemonkeysbourbon),
-        CafeItem("Puma Café Gold Selection 250gr", "S/ 11.00", R.drawable.im_pumacafegold)
+        CafeItem("Café en Grano Tunki Tipo Americano 215g", "S/ 8.00", R.drawable.im_cafeamericano,-15.838836890992736,-70.02814384810597),
+        CafeItem("Café Gourmet Zokya 250gr", "S/ 9.00", R.drawable.im_cafegourmet,-12.005303051009932, -77.09893414659031),
+        CafeItem("Three Monkeys Bourbon 200gr", "S/ 10.00", R.drawable.im_threemonkeysbourbon,-13.517684809887477, -71.97473092698121),
+        CafeItem("Puma Café Gold Selection 250gr", "S/ 11.00", R.drawable.im_pumacafegold,-12.076499720223184, -77.03668521687571)
     )
 
     Scaffold(

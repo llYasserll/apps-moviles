@@ -20,7 +20,6 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(navController: NavHostController) {
 
-    // Efecto de navegación tras 2 segundos
     LaunchedEffect(Unit) {
         delay(2000)
         navController.navigate("login") {
@@ -28,7 +27,6 @@ fun SplashScreen(navController: NavHostController) {
         }
     }
 
-    // Fondo y contenido centrado
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -39,7 +37,6 @@ fun SplashScreen(navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // Logo de la app
             Image(
                 painter = painterResource(id = R.drawable.ic_launcher),
                 contentDescription = "Logo",
@@ -48,7 +45,6 @@ fun SplashScreen(navController: NavHostController) {
                     .padding(bottom = 24.dp)
             )
 
-            // Nombre o lema de la app
             Text(
                 text = "MEDICONTROL",
                 color = SweetPink,

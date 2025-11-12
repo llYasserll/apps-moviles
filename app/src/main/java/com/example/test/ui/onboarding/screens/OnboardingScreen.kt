@@ -73,7 +73,7 @@ fun OnboardingScreen(onNext: () -> Unit) {
     }
 }
 
-//Puedes correr solo este file para entrar a lo que estes diseñando sin compilar toda la app
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewOnboardingScreen() {
