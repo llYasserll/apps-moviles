@@ -5,27 +5,20 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.test.R
-
-
 
 data class FoodItem(
     val name: String,
@@ -35,20 +28,25 @@ data class FoodItem(
 @Composable
 fun FoodGridCard(
     modifier: Modifier = Modifier,
-    title: String = "Recomendados",
+    title: String = "Your Recipes",
     items: List<FoodItem>
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(12.dp),
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFFF6F91)), // 💗 mismo rosado
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+        ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleMedium,
+                color = Color.White,
+                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier
                     .padding(bottom = 8.dp)
                     .align(Alignment.Start)
@@ -83,8 +81,9 @@ fun FoodItemCard(
 ) {
     Card(
         modifier = modifier,
-        shape = RoundedCornerShape(10.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Box(
@@ -95,10 +94,11 @@ fun FoodItemCard(
                 Image(
                     painter = painterResource(id = item.imageRes),
                     contentDescription = item.name,
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
                 )
 
-                // Ícono con fondo circular sólido
+                // ❤️ Botón favorito con fondo rosado
                 IconButton(
                     onClick = { /* TODO: acción de favorito */ },
                     modifier = Modifier
@@ -107,9 +107,9 @@ fun FoodItemCard(
                 ) {
                     Surface(
                         modifier = Modifier
-                            .size(32.dp) // 🔹 Cambia este valor para ajustar el tamaño del círculo
+                            .size(32.dp)
                             .clip(CircleShape),
-                        color = MaterialTheme.colorScheme.primary // 🔹 Color sólido del fondo
+                        color = Color(0xFFFF6F91) // 💗 rosado igual que el diseño
                     ) {
                         Box(
                             contentAlignment = Alignment.Center,
@@ -118,45 +118,48 @@ fun FoodItemCard(
                             Image(
                                 painter = painterResource(id = R.drawable.ic_heart),
                                 contentDescription = "Favorito",
-                                modifier = Modifier.size(18.dp) // 🔹 Cambia este valor para ajustar el tamaño del ícono
+                                modifier = Modifier.size(18.dp)
                             )
                         }
                     }
                 }
             }
 
-            Surface(
+            // 🍰 Nombre del plato
+            Box(
+                contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(48.dp),
-                shape = RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp),
-                shadowElevation = 2.dp
+                    .height(48.dp)
+                    .clickable(enabled = onClick != null) { onClick?.invoke() }
+                    .background(Color.White)
             ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clickable(enabled = onClick != null) { onClick?.invoke() }
-                ) {
-                    Text(
-                        text = item.name,
-                        style = MaterialTheme.typography.bodyMedium,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                }
+                Text(
+                    text = item.name,
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                )
             }
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0x000000)
 @Composable
 fun FoodGridCardPreview() {
     val samples = listOf(
-        FoodItem(name = "Tacos al Pastor", imageRes = R.drawable.ic_launcher_foreground),
-        FoodItem(name = "Sushi Roll", imageRes = R.drawable.ic_launcher_foreground)
+        FoodItem(name = "Chicken Burger", imageRes = R.drawable.chicken),
+        FoodItem(name = "Tiramisu", imageRes = R.drawable.tiramisu)
     )
 
-    FoodGridCard(title = "Favoritos de hoy", items = samples)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black) // 🔹 Fondo negro global
+            .padding(16.dp)
+    ) {
+        FoodGridCard(title = "Your Recipes", items = samples)
+    }
 }
