@@ -47,6 +47,8 @@ dependencies {
     implementation(libs.androidx.material3)
     // Material Icons Extended (para usar Icons.Filled.*)
     implementation("androidx.compose.material:material-icons-extended")
+    //CardView
+    implementation("androidx.cardview:cardview:1.0.0")
 
 
 
