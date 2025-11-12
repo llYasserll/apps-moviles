@@ -1,7 +1,9 @@
 package com.example.test.ui.screens
 
+import android.R.attr.onClick
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -25,7 +27,9 @@ import com.example.test.ui.theme.*
 data class CafeItem(
     val nombre: String,
     val precio: String,
-    val imagen: Int
+    val imagen: Int,
+    val lat: Double,
+    val lng: Double
 )
 
 @Composable
@@ -98,7 +102,9 @@ fun HomeScreen(navController: NavHostController) {
                 }
 
                 items(cafes) { cafe ->
-                    CafeCard(cafe)
+                    CafeCard(cafe = cafe) {
+                        navController.navigate("tracking/${cafe.nombre}")
+                    }
                 }
             }
         }
@@ -106,11 +112,11 @@ fun HomeScreen(navController: NavHostController) {
 }
 
 @Composable
-fun CafeCard(cafe: CafeItem) {
+fun CafeCard(cafe: CafeItem, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(150.dp),
+            .height(150.dp).clickable{ onClick()},
         colors = CardDefaults.cardColors(containerColor = Pink),
         elevation = CardDefaults.cardElevation(6.dp),
         shape = RoundedCornerShape(16.dp)
@@ -145,7 +151,7 @@ fun CafeCard(cafe: CafeItem) {
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Button(
-                    onClick = { /* acción comprar o ver detalle */ },
+                    onClick = { onClick() },
                     colors = ButtonDefaults.buttonColors(containerColor = SweetPink),
                     modifier = Modifier.height(36.dp)
                 ) {

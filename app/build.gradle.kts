@@ -14,6 +14,7 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
+        manifestPlaceholders["MAPS_API_KEY"] = project.findProperty("MAPS_API_KEY") ?: ""
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -82,5 +83,11 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    //MAPS
+    dependencies {
+        implementation("com.google.maps.android:maps-compose:4.4.1")
+        implementation("com.google.android.gms:play-services-maps:19.0.0")
+    }
+
 
 }
