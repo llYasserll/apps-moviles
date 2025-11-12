@@ -1,5 +1,6 @@
 package com.example.test.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.test.R
 import com.example.test.ui.components.RegisterViewModel
 import com.example.test.ui.theme.Black
 import com.example.test.ui.theme.SweetPink
@@ -54,6 +56,7 @@ fun RegisterScreen(
                 .fillMaxWidth()
                 .padding(32.dp)
         ) {
+            // Título
             Text(
                 text = "Crear cuenta",
                 fontSize = 28.sp,
@@ -63,6 +66,7 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            // Nombre completo
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
@@ -79,6 +83,7 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Correo electrónico
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
@@ -95,6 +100,7 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Contraseña
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
@@ -121,6 +127,7 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Confirmar contraseña
             OutlinedTextField(
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
@@ -147,6 +154,7 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            // Botón de registro
             Button(
                 onClick = {
                     if (password == confirmPassword) {
@@ -169,6 +177,7 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Mensajes
             response?.let {
                 val token = it.data?.accessToken ?: "N/A"
                 Text(
