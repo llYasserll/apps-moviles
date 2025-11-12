@@ -154,8 +154,8 @@ fun FoodItemCard(
 @Composable
 fun FoodGridCardPreview() {
     val samples = listOf(
-        FoodItem(name = "Tacos al Pastor", imageRes = R.drawable.hamburguesa),
-        FoodItem(name = "Sushi Roll", imageRes = R.drawable.tiramisu)
+        FoodItem(name = "Tacos al Pastor", imageRes = R.drawable.ic_launcher_foreground),
+        FoodItem(name = "Sushi Roll", imageRes = R.drawable.ic_launcher_foreground)
     )
 
     FoodGridCard(title = "Favoritos de hoy", items = samples)
