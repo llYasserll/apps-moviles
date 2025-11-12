@@ -2,29 +2,41 @@ package com.example.test.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.test.ui.components.RegisterViewModel
+import com.example.test.ui.theme.Black
+import com.example.test.ui.theme.SweetPink
+import com.example.test.ui.theme.Pink
+import com.example.test.ui.theme.RedPink
 
 @Composable
-fun RegisterScreen(navController: NavHostController, viewModel: RegisterViewModel = viewModel()) {
+fun RegisterScreen(
+    navController: NavHostController,
+    viewModel: RegisterViewModel = viewModel()
+) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+    var passwordVisible by remember { mutableStateOf(false) }
+    var confirmPasswordVisible by remember { mutableStateOf(false) }
 
     val isLoading = viewModel.isLoading
     val response = viewModel.registerResponse
@@ -33,7 +45,7 @@ fun RegisterScreen(navController: NavHostController, viewModel: RegisterViewMode
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF5F9F7)),
+            .background(Black),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -44,8 +56,9 @@ fun RegisterScreen(navController: NavHostController, viewModel: RegisterViewMode
         ) {
             Text(
                 text = "Crear cuenta",
-                style = MaterialTheme.typography.headlineSmall,
-                color = Color(0xFF1A4D2E)
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = SweetPink
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -53,8 +66,13 @@ fun RegisterScreen(navController: NavHostController, viewModel: RegisterViewMode
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
-                label = { Text("Nombre completo") },
-                leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
+                label = { Text("Nombre completo", color = Color.White) },
+                leadingIcon = { Icon(Icons.Default.Person, contentDescription = null, tint = SweetPink) },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = SweetPink,
+                    unfocusedBorderColor = Pink,
+                    cursorColor = SweetPink
+                ),
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -64,9 +82,13 @@ fun RegisterScreen(navController: NavHostController, viewModel: RegisterViewMode
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Correo electrónico") },
-                leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                label = { Text("Correo electrónico", color = Color.White) },
+                leadingIcon = { Icon(Icons.Default.Email, contentDescription = null, tint = SweetPink) },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = SweetPink,
+                    unfocusedBorderColor = Pink,
+                    cursorColor = SweetPink
+                ),
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -76,9 +98,23 @@ fun RegisterScreen(navController: NavHostController, viewModel: RegisterViewMode
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Contraseña") },
-                visualTransformation = PasswordVisualTransformation(),
-                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+                label = { Text("Contraseña", color = Color.White) },
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = SweetPink) },
+                trailingIcon = {
+                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        Icon(
+                            imageVector = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                            contentDescription = if (passwordVisible) "Ocultar" else "Mostrar",
+                            tint = SweetPink
+                        )
+                    }
+                },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = SweetPink,
+                    unfocusedBorderColor = Pink,
+                    cursorColor = SweetPink
+                ),
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -88,9 +124,23 @@ fun RegisterScreen(navController: NavHostController, viewModel: RegisterViewMode
             OutlinedTextField(
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
-                label = { Text("Confirmar contraseña") },
-                visualTransformation = PasswordVisualTransformation(),
-                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+                label = { Text("Confirmar contraseña", color = Color.White) },
+                visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = SweetPink) },
+                trailingIcon = {
+                    IconButton(onClick = { confirmPasswordVisible = !confirmPasswordVisible }) {
+                        Icon(
+                            imageVector = if (confirmPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                            contentDescription = if (confirmPasswordVisible) "Ocultar" else "Mostrar",
+                            tint = SweetPink
+                        )
+                    }
+                },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = SweetPink,
+                    unfocusedBorderColor = Pink,
+                    cursorColor = SweetPink
+                ),
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -101,28 +151,34 @@ fun RegisterScreen(navController: NavHostController, viewModel: RegisterViewMode
                 onClick = {
                     if (password == confirmPassword) {
                         viewModel.register(name, email, password)
+                    } else {
+                        viewModel.errorMessage = "Las contraseñas no coinciden"
                     }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                enabled = !isLoading,
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A4D2E))
+                enabled = !isLoading.value,
+                colors = ButtonDefaults.buttonColors(containerColor = RedPink)
             ) {
-                Text(if (isLoading) "Registrando..." else "Registrarse", color = Color.White)
+                Text(
+                    text = if (isLoading.value) "Registrando..." else "Registrarse",
+                    color = Color.White
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
             response?.let {
+                val token = it.data?.accessToken ?: "N/A"
                 Text(
-                    text = "Registro exitoso. AccessToken: ${it.accessToken ?: "N/A"}",
-                    color = Color.Green
+                    text = "Registro exitoso. Token:",
+                    color = SweetPink
                 )
             }
 
             error?.let {
-                Text(text = it, color = Color.Red)
+                Text(text = it, color = RedPink)
             }
         }
     }

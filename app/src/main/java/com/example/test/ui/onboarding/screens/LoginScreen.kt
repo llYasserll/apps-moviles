@@ -97,9 +97,9 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = vi
             PrimaryButton(
                 onClick = {
                     if (email.isNotBlank() && password.isNotBlank()) {
-                        //viewModel.loginUser {
-                            //navController.navigate("home") // navega a home si éxito
-                        //}
+                        viewModel.loginUser() {
+                            navController.navigate("home") // navega a home si éxito
+                        }
                         print("HOME")
                     } else {
                         viewModel.errorMessage.value = "Completa todos los campos"
