@@ -7,19 +7,20 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.test.R
+import com.example.test.ui.components.BottomMenuBar
+import com.example.test.ui.theme.*
 
 data class CafeItem(
     val nombre: String,
@@ -29,7 +30,7 @@ data class CafeItem(
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
-    var selectedItem by remember { mutableStateOf("home") }
+    var selectedItem by remember { mutableStateOf(0) }
     var searchQuery by remember { mutableStateOf("") }
 
     val cafes = listOf(
@@ -41,16 +42,24 @@ fun HomeScreen(navController: NavHostController) {
 
     Scaffold(
         bottomBar = {
-            BottomNavigationBar(
+            BottomMenuBar(
                 selectedItem = selectedItem,
-                onItemSelected = { selectedItem = it; navController.navigate(it) }
+                onItemSelected = { index ->
+                    selectedItem = index
+                    when (index) {
+                        0 -> navController.navigate("home")
+                        1 -> navController.navigate("chats")
+                        2 -> navController.navigate("tabs")
+                        3 -> navController.navigate("profile")
+                    }
+                }
             )
         }
     ) { innerPadding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFFF5F9F7))
+                .background(White) // 🎨 Color del tema
                 .padding(innerPadding)
         ) {
             LazyColumn(
@@ -60,11 +69,11 @@ fun HomeScreen(navController: NavHostController) {
             ) {
                 item {
                     Text(
-                        text = "Hola, Eddy",
+                        text = "Hola, Eddy 👋",
                         style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
-                        color = Color(0xFF1A4D2E)
+                        color = BrownPod
                     )
-                    Text("Encuentra tu café favorito ☕", color = Color.Gray)
+                    Text("Encuentra tu café favorito ☕", color = SweetPink)
 
                     Spacer(modifier = Modifier.height(16.dp))
 
@@ -72,7 +81,13 @@ fun HomeScreen(navController: NavHostController) {
                         value = searchQuery,
                         onValueChange = { searchQuery = it },
                         label = { Text("Buscar café o proveedor") },
-                        leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Buscar") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Search,
+                                contentDescription = "Buscar",
+                                tint = BrownPod
+                            )
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),
@@ -96,7 +111,7 @@ fun CafeCard(cafe: CafeItem) {
         modifier = Modifier
             .fillMaxWidth()
             .height(150.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = Pink),
         elevation = CardDefaults.cardElevation(6.dp),
         shape = RoundedCornerShape(16.dp)
     ) {
@@ -120,58 +135,25 @@ fun CafeCard(cafe: CafeItem) {
                 Text(
                     text = cafe.nombre,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF1A4D2E)
+                    color = BrownPod
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = cafe.precio,
-                    color = Color(0xFF4B7355),
+                    color = RedPink,
                     fontWeight = FontWeight.Medium
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Button(
-                    onClick = { /*  acción comprar o ver detalle */ },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A4D2E)),
+                    onClick = { /* acción comprar o ver detalle */ },
+                    colors = ButtonDefaults.buttonColors(containerColor = SweetPink),
                     modifier = Modifier.height(36.dp)
                 ) {
-                    Text("Ordenar", color = Color.White)
+                    Text("Ordenar", color = White)
                 }
             }
         }
     }
 }
 
-@Composable
-fun BottomNavigationBar(selectedItem: String, onItemSelected: (String) -> Unit) {
-    NavigationBar(containerColor = Color(0xFF1A4D2E)) {
-        NavigationBarItem(
-            selected = selectedItem == "home",
-            onClick = { onItemSelected("home") },
-            icon = { Icon(Icons.Filled.Home, contentDescription = "Inicio", tint = Color.White) },
-            alwaysShowLabel = false,
-            label = { Text("Inicio") }
-        )
-        NavigationBarItem(
-            selected = selectedItem == "products",
-            onClick = { onItemSelected("products") },
-            icon = { Icon(Icons.Filled.LocalCafe, contentDescription = "Productos", tint = Color.White) },
-            alwaysShowLabel = false,
-            label = { Text("Café") }
-        )
-        NavigationBarItem(
-            selected = selectedItem == "orders",
-            onClick = { onItemSelected("orders") },
-            icon = { Icon(Icons.Filled.ShoppingCart, contentDescription = "Pedidos", tint = Color.White) },
-            alwaysShowLabel = false,
-            label = { Text("Pedidos") }
-        )
-        NavigationBarItem(
-            selected = selectedItem == "profile",
-            onClick = { onItemSelected("profile") },
-            icon = { Icon(Icons.Filled.Person, contentDescription = "Perfil", tint = Color.White) },
-            alwaysShowLabel = false,
-            label = { Text("Perfil") }
-        )
-    }
-}
 
