@@ -44,12 +44,11 @@ class LoginViewModel : ViewModel() {
 
                 val body = response.body()
 
-                // ✅ Nuevo acceso correcto al token
                 if (response.isSuccessful && body?.data?.accessToken != null) {
                     val token = body.data.accessToken
                     val profile = body.data.profile
 
-                    successMessage.value = body.message ?: "Inicio de sesión exitoso ✅"
+                    successMessage.value = body.message ?: "Inicio de sesión exitoso "
                     Log.d("LOGIN_SUCCESS", "Token: $token")
                     Log.d("LOGIN_SUCCESS", "Usuario: ${profile?.fullName} (${profile?.email})")
 
