@@ -18,13 +18,13 @@ class LoginViewModel : ViewModel() {
     var errorMessage = mutableStateOf<String?>(null)
     var successMessage = mutableStateOf<String?>(null)
 
-    fun loginUser() {
+    fun loginUser(onSuccess: () -> Unit) {
         isLoading.value = true
         errorMessage.value = null
         successMessage.value = null
 
         val userAuth = UserAuth(
-            fullName = "",
+            fullName = "", // no se usa en login
             email = email.value,
             password = password.value
         )
@@ -35,13 +35,16 @@ class LoginViewModel : ViewModel() {
                 response: Response<LoginResponse>
             ) {
                 isLoading.value = false
-                if (response.isSuccessful && response.body() != null) {
+                if (response.isSuccessful && response.body()?.accessToken != null) {
                     val loginResponse = response.body()
-                    successMessage.value = "Inicio de sesión exitoso"
+                    successMessage.value = "Inicio de sesión exitoso ✅"
                     Log.d("LOGIN_SUCCESS", "Token: ${loginResponse?.accessToken}")
+
+                    // 🚀 Ejecuta la función callback (navegar a Home)
+                    onSuccess()
                 } else {
                     errorMessage.value = "Credenciales incorrectas o error del servidor"
-                    Log.e("LOGIN_ERROR", "Código: ${response.code()}")
+                    Log.e("LOGIN_ERROR", "Código: ${response.code()} - ${response.message()}")
                 }
 
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
