@@ -34,8 +34,8 @@ fun HomeScreen(navController: NavHostController) {
     var searchQuery by remember { mutableStateOf("") }
 
     val cafes = listOf(
-        CafeItem("Café Espresso", "S/ 8.00", R.drawable.cafe_espresso),
-        CafeItem("Café Americano", "S/ 9.00", R.drawable.cafe_americano),
+        CafeItem("Café en Grano Tunki Tipo Americano 215g", "S/ 8.00", R.drawable.im_cafeamericano),
+        CafeItem("Café Gourmet Zokya 250gr", "S/ 9.00", R.drawable.im_cafegourmet),
         CafeItem("Café Latte", "S/ 10.00", R.drawable.cafe_latte),
         CafeItem("Café Capuccino", "S/ 11.00", R.drawable.cafe_capuccino)
     )

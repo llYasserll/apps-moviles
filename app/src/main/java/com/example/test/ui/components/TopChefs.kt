@@ -130,7 +130,7 @@ fun MainCardPreview() {
     MaterialTheme {
         MainCard(
             title = "Opciones disponibles",
-            leftImageRes = R.drawable.tiramisu, // ejemplo
+            leftImageRes = R.drawable.ic_launcher_foreground, // ejemplo
             leftLabel = "Perfil",
             rightImageRes = R.drawable.ic_launcher_foreground,
             rightLabel = "Ajustes"
