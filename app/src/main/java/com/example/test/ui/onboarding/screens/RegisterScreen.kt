@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
@@ -27,7 +28,11 @@ import com.example.test.ui.theme.Black
 import com.example.test.ui.theme.SweetPink
 import com.example.test.ui.theme.Pink
 import com.example.test.ui.theme.RedPink
+import androidx.compose.material.icons.filled.ArrowBack
 
+
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(
     navController: NavHostController,
@@ -44,150 +49,175 @@ fun RegisterScreen(
     val response = viewModel.registerResponse
     val error = viewModel.errorMessage
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Black),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Registro",
+                        color = SweetPink,
+                        fontWeight = FontWeight.Bold
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Volver",
+                            tint = SweetPink
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Black
+                )
+            )
+        },
+        containerColor = Black
+    ) { paddingValues ->
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(32.dp)
+                .fillMaxSize()
+                .padding(paddingValues)
+                .background(Black),
+            contentAlignment = Alignment.Center
         ) {
-            // Título
-            Text(
-                text = "Crear cuenta",
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                color = SweetPink
-            )
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Nombre completo
-            OutlinedTextField(
-                value = name,
-                onValueChange = { name = it },
-                label = { Text("Nombre completo", color = Color.White) },
-                leadingIcon = { Icon(Icons.Default.Person, contentDescription = null, tint = SweetPink) },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = SweetPink,
-                    unfocusedBorderColor = Pink,
-                    cursorColor = SweetPink
-                ),
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Correo electrónico
-            OutlinedTextField(
-                value = email,
-                onValueChange = { email = it },
-                label = { Text("Correo electrónico", color = Color.White) },
-                leadingIcon = { Icon(Icons.Default.Email, contentDescription = null, tint = SweetPink) },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = SweetPink,
-                    unfocusedBorderColor = Pink,
-                    cursorColor = SweetPink
-                ),
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Contraseña
-            OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
-                label = { Text("Contraseña", color = Color.White) },
-                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = SweetPink) },
-                trailingIcon = {
-                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Icon(
-                            imageVector = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                            contentDescription = if (passwordVisible) "Ocultar" else "Mostrar",
-                            tint = SweetPink
-                        )
-                    }
-                },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = SweetPink,
-                    unfocusedBorderColor = Pink,
-                    cursorColor = SweetPink
-                ),
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Confirmar contraseña
-            OutlinedTextField(
-                value = confirmPassword,
-                onValueChange = { confirmPassword = it },
-                label = { Text("Confirmar contraseña", color = Color.White) },
-                visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = SweetPink) },
-                trailingIcon = {
-                    IconButton(onClick = { confirmPasswordVisible = !confirmPasswordVisible }) {
-                        Icon(
-                            imageVector = if (confirmPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                            contentDescription = if (confirmPasswordVisible) "Ocultar" else "Mostrar",
-                            tint = SweetPink
-                        )
-                    }
-                },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = SweetPink,
-                    unfocusedBorderColor = Pink,
-                    cursorColor = SweetPink
-                ),
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true
-            )
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Botón de registro
-            Button(
-                onClick = {
-                    if (password == confirmPassword) {
-                        viewModel.register(name, email, password)
-                    } else {
-                        viewModel.errorMessage = "Las contraseñas no coinciden"
-                    }
-                },
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp),
-                enabled = !isLoading.value,
-                colors = ButtonDefaults.buttonColors(containerColor = RedPink)
+                    .padding(32.dp)
             ) {
                 Text(
-                    text = if (isLoading.value) "Registrando..." else "Registrarse",
-                    color = Color.White
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Mensajes
-            response?.let {
-                val token = it.data?.accessToken ?: "N/A"
-                Text(
-                    text = "Registro exitoso. Token:",
+                    text = "Crear cuenta",
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold,
                     color = SweetPink
                 )
-            }
 
-            error?.let {
-                Text(text = it, color = RedPink)
+                Spacer(modifier = Modifier.height(24.dp))
+
+                // Nombre
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Nombre completo", color = Color.White) },
+                    leadingIcon = { Icon(Icons.Default.Person, contentDescription = null, tint = SweetPink) },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = SweetPink,
+                        unfocusedBorderColor = Pink,
+                        cursorColor = SweetPink
+                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Correo
+                OutlinedTextField(
+                    value = email,
+                    onValueChange = { email = it },
+                    label = { Text("Correo electrónico", color = Color.White) },
+                    leadingIcon = { Icon(Icons.Default.Email, contentDescription = null, tint = SweetPink) },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = SweetPink,
+                        unfocusedBorderColor = Pink,
+                        cursorColor = SweetPink
+                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Contraseña
+                OutlinedTextField(
+                    value = password,
+                    onValueChange = { password = it },
+                    label = { Text("Contraseña", color = Color.White) },
+                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                    leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = SweetPink) },
+                    trailingIcon = {
+                        IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                            Icon(
+                                imageVector = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                                contentDescription = if (passwordVisible) "Ocultar" else "Mostrar",
+                                tint = SweetPink
+                            )
+                        }
+                    },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = SweetPink,
+                        unfocusedBorderColor = Pink,
+                        cursorColor = SweetPink
+                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Confirmar contraseña
+                OutlinedTextField(
+                    value = confirmPassword,
+                    onValueChange = { confirmPassword = it },
+                    label = { Text("Confirmar contraseña", color = Color.White) },
+                    visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                    leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = SweetPink) },
+                    trailingIcon = {
+                        IconButton(onClick = { confirmPasswordVisible = !confirmPasswordVisible }) {
+                            Icon(
+                                imageVector = if (confirmPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                                contentDescription = if (confirmPasswordVisible) "Ocultar" else "Mostrar",
+                                tint = SweetPink
+                            )
+                        }
+                    },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = SweetPink,
+                        unfocusedBorderColor = Pink,
+                        cursorColor = SweetPink
+                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                // Botón registrar
+                Button(
+                    onClick = {
+                        if (password == confirmPassword) {
+                            viewModel.register(name, email, password)
+                        } else {
+                            viewModel.errorMessage = "Las contraseñas no coinciden"
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
+                    enabled = !isLoading.value,
+                    colors = ButtonDefaults.buttonColors(containerColor = RedPink)
+                ) {
+                    Text(
+                        text = if (isLoading.value) "Registrando..." else "Registrarse",
+                        color = Color.White
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                response?.let {
+                    Text(
+                        text = "Registro exitoso",
+                        color = SweetPink
+                    )
+                }
+
+                error?.let {
+                    Text(text = it, color = RedPink)
+                }
             }
         }
     }
