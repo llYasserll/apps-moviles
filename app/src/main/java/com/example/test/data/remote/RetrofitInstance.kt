@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
 
-    private const val BASE_URL = "http://10.0.2.2:5000/"
+    private const val BASE_URL = "https://migrated-apps-moviles-backend.vercel.app/"
 
     private val client by lazy {
         val logging = HttpLoggingInterceptor().apply {
