@@ -2,7 +2,7 @@ package com.example.test.data.model
 
 // --- Request ---
 data class UserAuth(
-    val fullName: String,
+    val fullName: String?,
     val email: String,
     val password: String
 )
@@ -20,6 +20,11 @@ data class RegisterData(
 )
 
 data class LoginResponse(
+    val message: String?,
+    val data: LoginData?
+)
+
+data class LoginData(
     val profile: UserProfile?,
     val accessToken: String?,
     val refreshToken: String?

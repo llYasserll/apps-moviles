@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.example.test.data.model.LoginResponse
 import com.example.test.data.model.UserAuth
 import com.example.test.data.remote.RetrofitInstance
+import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,42 +38,51 @@ class LoginViewModel : ViewModel() {
             ) {
                 isLoading.value = false
 
-                if (response.isSuccessful && response.body()?.accessToken != null) {
-                    val loginResponse = response.body()
-                    successMessage.value = "Inicio de sesión exitoso ✅"
-                    Log.d("LOGIN_SUCCESS", "Token: ${loginResponse?.accessToken}")
+                Log.d("LOGIN_DEBUG", "Código HTTP: ${response.code()}")
+                Log.d("LOGIN_DEBUG", "Cuerpo exitoso: ${response.body()}")
+                Log.d("LOGIN_DEBUG", "Cuerpo error: ${response.errorBody()?.string()}")
+
+                val body = response.body()
+
+                // ✅ Nuevo acceso correcto al token
+                if (response.isSuccessful && body?.data?.accessToken != null) {
+                    val token = body.data.accessToken
+                    val profile = body.data.profile
+
+                    successMessage.value = body.message ?: "Inicio de sesión exitoso ✅"
+                    Log.d("LOGIN_SUCCESS", "Token: $token")
+                    Log.d("LOGIN_SUCCESS", "Usuario: ${profile?.fullName} (${profile?.email})")
+
                     onSuccess()
                 } else {
-                    val rawError = try {
-                        response.errorBody()?.string()
-                    } catch (e: Exception) {
-                        "No se pudo leer el cuerpo de error (${e.localizedMessage})"
-                    }
-
-                    Log.e("LOGIN_DEBUG", "Código: ${response.code()}")
-                    Log.e("LOGIN_DEBUG", "Mensaje del servidor: $rawError")
-                    Log.e("LOGIN_DEBUG", "Mensaje HTTP: ${response.message()}")
-
-                    // Analiza el mensaje
-                    val parsedMessage = when {
-                        rawError?.contains("Invalid", ignoreCase = true) == true -> "Credenciales incorrectas"
-                        rawError?.contains("message") == true -> {
-                            Regex("\"message\"\\s*:\\s*\"([^\"]+)\"").find(rawError)?.groupValues?.get(1)
-                                ?: "Error al iniciar sesión"
-                        }
-                        else -> "Error al iniciar sesión"
-                    }
-
-                    errorMessage.value = parsedMessage
+                    val rawError = extractErrorBody(response.errorBody())
+                    errorMessage.value = rawError
+                    Log.e("LOGIN_ERROR", "Mensaje mostrado al usuario: $rawError")
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 isLoading.value = false
                 errorMessage.value = "Error de red: ${t.localizedMessage}"
-                Log.e("LOGIN_ERROR", "Error en login", t)
+                Log.e("LOGIN_FAILURE", "Fallo de red: ${t.localizedMessage}", t)
             }
         })
     }
 
+    private fun extractErrorBody(errorBody: ResponseBody?): String {
+        if (errorBody == null) return "Error desconocido (sin cuerpo de respuesta)"
+
+        val errorString = try {
+            errorBody.string()
+        } catch (e: Exception) {
+            return "Error al leer cuerpo de error"
+        }
+
+        return try {
+            val json = JSONObject(errorString)
+            json.optString("message", "Error sin mensaje en JSON: $errorString")
+        } catch (e: Exception) {
+            "Error no JSON: $errorString"
+        }
+    }
 }
