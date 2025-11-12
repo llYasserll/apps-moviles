@@ -43,13 +43,12 @@ class LoginViewModel : ViewModel() {
                     errorMessage.value = "Credenciales incorrectas o error del servidor"
                     Log.e("LOGIN_ERROR", "Código: ${response.code()}")
                 }
-            }
 
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                isLoading.value = false
-                errorMessage.value = "Error de red: ${t.localizedMessage}"
-                Log.e("LOGIN_ERROR", "Error en login", t)
-            }
-        })
+                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    isLoading.value = false
+                    errorMessage.value = "Error de red: ${t.localizedMessage}"
+                    Log.e("LOGIN_ERROR", "Error en login", t)
+                }
+            })
+        }
     }
-}

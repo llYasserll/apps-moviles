@@ -18,7 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import com.example.test.ui.components.PrimaryButton
-import com.example.test.ui.onboarding.components.OnboardingPageView
+import com.example.test.ui.onboarding.components.OnboardingView
 import com.example.test.ui.onboarding.model.onboarding1
 import com.example.test.ui.onboarding.model.onboarding2
 import com.example.test.ui.theme.RedPink
@@ -54,7 +54,7 @@ fun OnboardingScreen(onNext: () -> Unit) {
                 )
             }, label = "pageTransition"
         ) { page ->
-            OnboardingPageView(
+            OnboardingView(
                 page = pages[page],
                 modifier = Modifier
                     .fillMaxWidth()
