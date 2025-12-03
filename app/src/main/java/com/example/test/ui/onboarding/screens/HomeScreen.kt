@@ -1,6 +1,5 @@
 package com.example.test.ui.screens
 
-import android.R.attr.onClick
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,7 +21,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.test.R
 import com.example.test.ui.components.BottomMenuBar
+import com.example.test.ui.onboarding.screens.TrackingMiniMap
 import com.example.test.ui.theme.*
+import com.google.android.gms.maps.model.LatLng
 
 data class CafeItem(
     val nombre: String,
@@ -32,10 +33,16 @@ data class CafeItem(
     val lng: Double
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavHostController) {
+
     var selectedItem by remember { mutableStateOf(0) }
     var searchQuery by remember { mutableStateOf("") }
+
+    // Estado para mostrar el modal
+    var showMapSheet by remember { mutableStateOf(false) }
+    var selectedCafe by remember { mutableStateOf<CafeItem?>(null) }
 
     val cafes = listOf(
         CafeItem("Café en Grano Tunki Tipo Americano 215g", "S/ 8.00", R.drawable.im_cafeamericano,-15.838836890992736,-70.02814384810597),
@@ -60,10 +67,11 @@ fun HomeScreen(navController: NavHostController) {
             )
         }
     ) { innerPadding ->
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(White) // 🎨 Color del tema
+                .background(White)
                 .padding(innerPadding)
         ) {
             LazyColumn(
@@ -103,8 +111,18 @@ fun HomeScreen(navController: NavHostController) {
 
                 items(cafes) { cafe ->
                     CafeCard(cafe = cafe) {
-                        navController.navigate("tracking/${cafe.nombre}")
+                        selectedCafe = cafe
+                        showMapSheet = true
                     }
+                }
+            }
+
+            if (showMapSheet && selectedCafe != null) {
+                ModalBottomSheet(
+                    onDismissRequest = { showMapSheet = false },
+                    shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)
+                ) {
+                    TrackingMiniMap(cafe = selectedCafe!!)
                 }
             }
         }
@@ -116,7 +134,8 @@ fun CafeCard(cafe: CafeItem, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(150.dp).clickable{ onClick()},
+            .height(150.dp)
+            .clickable { onClick() },
         colors = CardDefaults.cardColors(containerColor = Pink),
         elevation = CardDefaults.cardElevation(6.dp),
         shape = RoundedCornerShape(16.dp)
@@ -161,5 +180,3 @@ fun CafeCard(cafe: CafeItem, onClick: () -> Unit) {
         }
     }
 }
-
-
